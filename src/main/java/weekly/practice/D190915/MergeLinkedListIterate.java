@@ -45,51 +45,26 @@ public class MergeLinkedListIterate {
     }
 
     public static Node merge(Node list1, Node list2) {
-        if (null == list1) {
-            return list2;
+        if (null == list1 || null == list2) {
+            return null == list1 ? list2 : list1;
         }
-        if (null == list2) {
-            return list1;
-        }
-        Node a = list1, b = list2;
-        Node head = new Node();
-        Node iter = head;
-        while (null != a || null != b) {
-            if (0 == iter.getValue()) {
-                if (null == a) {
-                    iter = b;
-                    break;
-                }
-                if (null == b) {
-                    iter = a;
-                    break;
-                }
-                if (a.value <= b.value) {
-                    iter = a;
-                    a = a.next;
-                } else {
-                    iter = b;
-                    b = b.next;
-                }
+        Node head = list1.value < list2.value ? list1 : list2;
+        Node cur1 = head == list1 ? list1 : list2;
+        Node cur2 = head == list1 ? list2 : list1;
+        Node pre = null, next = null;
+        while (null != cur1 && null != cur2) {
+            if (cur1.value < cur2.value) {
+                pre = cur1;
+                cur1 = cur1.next;
             } else {
-                if (null == a) {
-                    iter.next = b;
-                    break;
-                }
-                if (null == b) {
-                    iter.next = a;
-                    break;
-                }
-                if (a.value <= b.value) {
-                    iter.next = a;
-                    a = a.next;
-                } else {
-                    iter.next = b;
-                    b = b.next;
-                }
+                next = cur2.next;
+                cur2.next = cur1;
+                pre.next = cur2;
+                pre = cur2;
+                cur2 = next;
             }
-            iter = iter.next;
         }
+        pre.next = null != cur1 ? cur2 : cur1;
         return head;
     }
 
