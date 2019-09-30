@@ -2,7 +2,7 @@ package weekly.practice.d190923;
 
 public class RemoveLastKthNode {
 
-    public class Node {
+    public static class Node {
         private int value;
         private Node next;
 
