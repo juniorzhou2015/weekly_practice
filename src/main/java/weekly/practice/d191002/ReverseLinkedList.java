@@ -19,7 +19,7 @@ public class ReverseLinkedList {
             pre = head;
             head = next;
         }
-        return next;
+        return pre;
     }
 
     public class DoubleNode {
@@ -40,11 +40,45 @@ public class ReverseLinkedList {
                 pre = head;
                 head = next;
             }
-            return next;
+            return pre;
         }
 
     }
 
+    public Node reversePart(Node head, int from, int to) {
+        if (null == head || null == head.next || 1 > from || from > to) {
+            return head;
+        }
+        int len = 0;
+        Node cur = head;
+        Node fPre = null, tAfter = null;
+        while (null != cur) {
+            len++;
+            if (len == from - 1) {
+                fPre = cur;
+            }
+            if (len == to + 1) {
+                tAfter = cur;
+            }
+            cur = cur.next;
+        }
+        if (to > len) {
+            return head;
+        }
+        cur = null == fPre ? head : fPre.next;
+        Node pre = null, next = null;
+        while (tAfter != cur) {
+            next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        if (null != fPre) {
+            fPre.next = cur;
+            return head;
+        }
+        return cur;
+    }
 
 
 }
