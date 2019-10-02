@@ -31,18 +31,18 @@ public class ReverseLinkedList {
             this.value = data;
         }
 
-        public DoubleNode reverse(DoubleNode head) {
-            DoubleNode pre = null, next = null;
-            while (null != head) {
-                next = head.next;
-                head.next = pre;
-                head.last = next;
-                pre = head;
-                head = next;
-            }
-            return pre;
-        }
+    }
 
+    public DoubleNode reverse(DoubleNode head) {
+        DoubleNode pre = null, next = null;
+        while (null != head) {
+            next = head.next;
+            head.next = pre;
+            head.last = next;
+            pre = head;
+            head = next;
+        }
+        return pre;
     }
 
     public Node reversePart(Node head, int from, int to) {
