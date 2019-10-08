@@ -23,13 +23,11 @@ public class RemoveLastKthNode {
         if (0 == lastKth) {
             head = head.next;
         } else if (lastKth < 0) {
-            cur = head;
-            lastKth++;
-            while (0 != lastKth) {
-                cur = cur.next;
-                lastKth++;
+            Node pre = head;
+            while (0 != ++lastKth) {
+                pre = pre.next;
             }
-            cur.next = cur.next.next;
+            pre.next = pre.next.next;
         }
         return head;
     }
@@ -57,10 +55,8 @@ public class RemoveLastKthNode {
             head = head.next;
         } else if (lastKth < 0) {
             cur = head;
-            lastKth++;
-            while (0 != lastKth) {
+            while (0 != ++lastKth) {
                 cur = cur.next;
-                lastKth++;
             }
             DoubleNode newNext = cur.next.next;
             cur.next = newNext;

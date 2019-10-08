@@ -33,7 +33,6 @@ public class BinaryTree<Key extends Comparable, Value> {
         if (!queue.isEmpty()) {
             Node n = queue.poll();
             System.out.print(n.getValue());
-            --currentLevelNum;
             if (null != n.left) {
                 queue.offer(n.left);
                 ++nextLevelNum;
@@ -42,7 +41,7 @@ public class BinaryTree<Key extends Comparable, Value> {
                 queue.offer(n.right);
                 ++nextLevelNum;
             }
-            if (0 == currentLevelNum) {
+            if (0 == --currentLevelNum) {
                 System.out.println();
                 currentLevelNum = nextLevelNum;
                 nextLevelNum = 0;
@@ -60,7 +59,6 @@ public class BinaryTree<Key extends Comparable, Value> {
         if (!stack.isEmpty()) {
             Node n = stack.pop();
             System.out.print(n.getValue());
-            --currentLevelNum;
             if (null != n.left) {
                 stack.add(n.left);
                 ++nextLevelNum;
@@ -69,7 +67,7 @@ public class BinaryTree<Key extends Comparable, Value> {
                 stack.add(n.right);
                 ++nextLevelNum;
             }
-            if (0 == currentLevelNum) {
+            if (0 == --currentLevelNum) {
                 System.out.println();
                 currentLevelNum = nextLevelNum;
                 nextLevelNum = 0;
@@ -101,7 +99,7 @@ public class BinaryTree<Key extends Comparable, Value> {
                 queue.offer(n.right);
                 ++nextLevelNum;
             }
-            if (0 == currentLevelNum) {
+            if (0 == --currentLevelNum) {
                 while (!stack.isEmpty()) {
                     Node m = stack.pop();
                     System.out.print(m.value);

@@ -1,6 +1,6 @@
 package weekly.practice.d190930;
 
-public class RemoveNode {
+public class RemoveMidNode {
 
     public class Node {
         private int value;
@@ -43,11 +43,11 @@ public class RemoveNode {
             head = head.next;
         }
         if (1 < n) {
-            cur = head;
+            Node pre = head;
             while (--n != 1) {
-                cur = cur.next;
+                pre = pre.next;
             }
-            cur.next = cur.next.next;
+            pre.next = pre.next.next;
         }
         return head;
     }

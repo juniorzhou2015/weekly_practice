@@ -18,18 +18,18 @@ public class JosephusKill {
         if (null == head || null == head.next || m < 1) {
             return head;
         }
-        Node cur1 = head.next, cur2 = head;
+        Node next = head.next, cur = head;
         int count = 0;
-        while (cur1 != cur2) {
+        while (next != cur) {
             if (m == ++count) {
-                cur2.next = cur1.next;
+                cur.next = next.next;
                 count = 0;
             } else {
-                cur2 = cur2.next;
+                cur = cur.next;
             }
-            cur1 = cur2.next;
+            next = next.next;
         }
-        return cur1;
+        return next;
     }
 
 }
