@@ -22,7 +22,7 @@ public class RelocateLinkedList {
         if (null == head || null == head.next) {
             return;
         }
-        // 左半区最后一个节点，之后需要断开
+        // 左半区最后一个节点
         Node mid = head;
         Node right = head.next;
         while (null != right.next && null != right.next.next) {
@@ -30,6 +30,7 @@ public class RelocateLinkedList {
             right = right.next.next;
         }
         right = mid.next;
+        // 左半区最后一个节点断开
         mid.next = null;
         merge(head, right);
     }
