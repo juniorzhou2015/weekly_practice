@@ -12,7 +12,10 @@ public class LongestSubArray {
             System.out.print(integer + " ");
         }
     }
-
+    /**
+     * 时间复杂度：O(N2)？
+     * 空间复杂度：O(N)
+     */
     public static Integer[] longestSubArray(int[] array) {
         if (null == array || 0 == array.length) {
             return null;
