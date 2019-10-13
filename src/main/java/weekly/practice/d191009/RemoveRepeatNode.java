@@ -34,7 +34,7 @@ public class RemoveRepeatNode {
         }
     }
     /**
-     * 时间复杂度：O(N2)
+     * 时间复杂度：O(N^2)
      * 空间复杂度：O(1)
      */
     public void removeRepeatNode2(Node head) {
