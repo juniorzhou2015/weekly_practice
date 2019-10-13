@@ -30,7 +30,7 @@ public class BinaryTree<Key extends Comparable, Value> {
         LinkedBlockingQueue<Node> queue = new LinkedBlockingQueue<>();
         queue.offer(root);
         int currentLevelNum = 1, nextLevelNum = 0;
-        if (!queue.isEmpty()) {
+        while (!queue.isEmpty()) {
             Node n = queue.poll();
             System.out.print(n.getValue());
             if (null != n.left) {
@@ -56,7 +56,7 @@ public class BinaryTree<Key extends Comparable, Value> {
         Stack<Node> stack = new Stack<>();
         stack.add(root);
         int currentLevelNum = 1, nextLevelNum = 0;
-        if (!stack.isEmpty()) {
+        while (!stack.isEmpty()) {
             Node n = stack.pop();
             System.out.print(n.getValue());
             if (null != n.left) {
