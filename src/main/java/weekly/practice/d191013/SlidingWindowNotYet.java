@@ -1,6 +1,6 @@
 package weekly.practice.d191013;
 
-public class SlidingWindow {
+public class SlidingWindowNotYet {
 
     /**
      * 某一个大文件被拆成了N个小文件，每个小文件编号从0至N-1，相应大小分别记为S(i)。给定磁盘空间为C
