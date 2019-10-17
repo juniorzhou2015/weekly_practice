@@ -1,6 +1,6 @@
 package weekly.practice.d191013;
 
-public class SlidingWindowNotYet {
+public class SlidingWindow {
 
     /**
      * 某一个大文件被拆成了N个小文件，每个小文件编号从0至N-1，相应大小分别记为S(i)。给定磁盘空间为C
@@ -16,8 +16,10 @@ public class SlidingWindowNotYet {
      * return = 1
      */
     public static void main(String[] args) {
-        int[] array = {1, 2, 3, 5, 4};
+        int[] array = {9, 1, 2, 3, 5, 1, 2, 4};
         maximumCopy1(array, 7);
+        System.out.println();
+        maximumCopy2(array, 7);
     }
 
     /**
@@ -40,7 +42,7 @@ public class SlidingWindowNotYet {
             }
             if (tempLeft < left) {
                 startIndex = i;
-                endIndex = j;
+                endIndex = j == s.length ? j - 1 : j;
                 left = tempLeft;
             }
         }
@@ -57,22 +59,22 @@ public class SlidingWindowNotYet {
         if (null == s || s.length == 0) {
             return;
         }
-        int left = C, startIndex = 0, endIndex = 0, i = 0, j = i + 1;
-//        while (startIndex < s.length) {
-//            int tempLeft = C;
-//            int value = s[j];
-//            if (value > tempLeft) {
-//                j++;
-//                break;
-//            }
-//            tempLeft -= value;
-//            if (tempLeft < left) {
-//                startIndex = i;
-//                endIndex = j;
-//                left = tempLeft;
-//            }
-//            j++;
-//        }
+        int startIndex = 0, endIndex = 0, i = 0, j = 0, left = C, tempLeft = C;
+        while (j < s.length) {
+            int value = s[j];
+            while (value > tempLeft) {
+                // 前指针往后挪
+                tempLeft += s[i++];
+            }
+            tempLeft -= value;
+            if (tempLeft < left) {
+                // 历史最小值
+                startIndex = i;
+                endIndex = j;
+                left = tempLeft;
+            }
+            j++;
+        }
         System.out.println("start_index: " + startIndex);
         System.out.println("end_index: " + endIndex);
         System.out.println("left: " + left);
