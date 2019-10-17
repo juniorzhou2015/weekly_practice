@@ -8,7 +8,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 /**
  * 最长链为这棵二叉树中一条最长的简单路径，即不经过重复结点的一条路径
  */
-public class FindMaxLenNotYet {
+public class FindMaxLenNot {
 
     public static void main(String[] args) {
         Node root = new Node(0);
@@ -56,10 +56,10 @@ public class FindMaxLenNotYet {
             findMaxLen(root.right);
         }
         if (null != root.left) {
-            root.maxLeft = root.left.maxLeft > root.left.maxRight ? root.left.maxLeft : root.left.maxRight + 1;
+            root.maxLeft = Math.max(root.left.maxLeft, root.left.maxRight) + 1;
         }
         if (null != root.right) {
-            root.maxRight = root.right.maxLeft > root.right.maxRight ? root.right.maxLeft : root.right.maxRight + 1;
+            root.maxRight = Math.max(root.right.maxLeft, root.right.maxRight) + 1;
         }
         if (root.maxLeft + root.maxRight > maxLen) {
             maxLen = root.maxLeft + root.maxRight;
