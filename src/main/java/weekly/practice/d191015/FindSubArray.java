@@ -11,30 +11,89 @@ import java.util.Map;
 public class FindSubArray {
 
     public static void main(String[] args) {
-        String[] m = {"a", "b", "c", "d"};
+        String[] mStr = {"a", "b", "c", "d"};
+        char[] m = {'a', 'b', 'c', 'd'};
         String n = "tbcacbdata";
-        System.out.println(findSubArray(m, n));
+        System.out.println(findSubArray1(mStr, n));
+        System.out.println(findSubArray2(m, n));
     }
 
-    public static int findSubArray(String[] m, String n) {
+    /**
+     * 字符编码值不确定时，用哈希表
+     */
+    public static int findSubArray1(String[] m, String n) {
         if (null == m || 0 == m.length || null == n) {
             return -1;
         }
-        Map<String, Boolean> map = new HashMap<>();
-        for (int i = 0; i < m.length; i++) {
-            map.put(String.valueOf(m[i]), false);
+        Map<String, Integer> map = new HashMap<>();
+        for (String value : m) {
+            map.put(value, 1);
         }
+        char[] nArray = n.toCharArray();
         int start = 0, end = 0;
-        while (end - start + 1 <= m.length && end < n.length()) {
-            String cur = String.valueOf(n.charAt(end));
-            if (map.containsKey(cur) && !map.get(cur)) {
+        while (end - start < m.length && end < nArray.length) {
+            String cur2 = String.valueOf(nArray[end]);
+            if (null != map.get(cur2) && 1 == map.get(cur2)) {
                 end++;
-                map.put(cur, true);
+                map.compute(cur2, (k, v) -> ++v);
                 continue;
             }
-            end = ++start;
-            for (int i = 0; i < m.length; i++) {
-                map.put(String.valueOf(m[i]), false);
+            if (null == map.get(cur2)) {
+                // 未出现过的字符
+                for (String s : m) {
+                    if (1 < map.get(s)) {
+                        map.put(s, 1);
+                    }
+                }
+                start = ++end;
+            } else {
+                // 已出现过的字符，即重复出现
+                String cur1 = String.valueOf(nArray[start]);
+                if (1 < map.get(cur1)) {
+                    map.put(cur1, 1);
+                }
+                start++;
+            }
+        }
+        if (end - start == m.length) {
+            return start;
+        }
+        return -1;
+    }
+    /**
+     * 字符编码值在0~255之间，用数组
+     */
+    public static int findSubArray2(char[] m, String n) {
+        if (null == m || 0 == m.length || null == n) {
+            return -1;
+        }
+        int[] array = new int[256];
+        for (char c : m) {
+            array[c] = 1;
+        }
+        int start = 0, end = 0;
+        char[] chars = n.toCharArray();
+        while (end - start + 1 <= m.length && end < n.length()) {
+            char cur = chars[end];
+            if (1 == array[cur]) {
+                end++;
+                array[cur]++;
+                continue;
+            }
+            if (0 == array[cur]) {
+                // 未出现过的字符
+                for (char c : m) {
+                    if (1 < array[c]) {
+                        array[c] = 1;
+                    }
+                }
+                start = ++end;
+            } else {
+                // 已出现过的字符，即重复出现
+                if (1 < array[chars[start]]) {
+                    array[chars[start]] = 1;
+                }
+                start++;
             }
         }
         if (end - start == m.length) {
