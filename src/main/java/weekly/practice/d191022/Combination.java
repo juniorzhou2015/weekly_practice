@@ -52,10 +52,10 @@ public class Combination {
         if (10 == n) {
             return 11;
         }
-        return combinationRecursion(arr, n-1)
-                + combinationRecursion(arr, n-2)
-                + combinationRecursion(arr, n-5)
-                + combinationRecursion(arr, n-10);
+        return combinationRecursion(arr, n - 1)
+                + combinationRecursion(arr, n - 2)
+                + combinationRecursion(arr, n - 5)
+                + combinationRecursion(arr, n - 10);
     }
 
 }
