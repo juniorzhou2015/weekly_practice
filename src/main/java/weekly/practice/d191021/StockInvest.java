@@ -11,6 +11,7 @@ public class StockInvest {
         int[] stock = {100, 80, 120, 130, 70, 60, 100, 125};
         System.out.println(maxProfitOneDay(stock));
         System.out.println(maxProfitOneDayPerfect(stock));
+        System.out.println(maxProfitAll(stock));
     }
 
     /**
@@ -54,7 +55,7 @@ public class StockInvest {
         int min = stock[0];
         int maxDiff = stock[1] - min;
         for (int i = 2; i < stock.length; i++) {
-            int pre = stock[i-1];
+            int pre = stock[i - 1];
             if (pre < min) {
                 min = pre;
             }
@@ -63,6 +64,31 @@ public class StockInvest {
             }
         }
         return maxDiff;
+    }
+
+    /**
+     * 时间复杂度怎么计算？
+     */
+    public static int maxProfitAll(int[] stock) {
+        int maxProfit = 0;
+        for (int i = 0, j = 0; i < stock.length; i = j) {
+            int start = stock[i], maxIter = 0;
+            for (j = i + 1; j < stock.length; j++) {
+                if (start > stock[j]) {
+                    if (i + 1 < j) {
+                        maxProfit += maxIter - start;
+                    }
+                    break;
+                }
+                if (maxIter < stock[j]) {
+                    maxIter = stock[j];
+                }
+                if (j + 1 == stock.length) {
+                    maxProfit += maxIter - start;
+                }
+            }
+        }
+        return maxProfit;
     }
 
 }
