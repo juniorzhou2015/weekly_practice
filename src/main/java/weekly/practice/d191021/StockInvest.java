@@ -8,32 +8,33 @@ package weekly.practice.d191021;
 public class StockInvest {
 
     public static void main(String[] args) {
-        int[] a = {100, 80, 120, 130, 70, 60, 100, 125};
-        System.out.println(maxProfitOneDay(a));
+        int[] stock = {100, 80, 120, 130, 70, 60, 100, 125};
+        System.out.println(maxProfitOneDay(stock));
+        System.out.println(maxProfitOneDayPerfect(stock));
     }
 
     /**
-     * 穷举算法的时间复杂度是O(n^2)
+     * 穷举算法的时间复杂度是O(M^2)
      */
 
     /**
-     * 时间复杂度小于O(n^2)？
+     * 时间复杂度小于O(N^2)？
      */
-    public static int maxProfitOneDay(int[] a) {
-        if (null == a || a.length <= 1) {
+    public static int maxProfitOneDay(int[] stock) {
+        if (null == stock || stock.length <= 1) {
             return -1;
         }
-        int len = a.length;
-        int maxProfit = 0, minBuy = a[0];
+        int len = stock.length;
+        int maxProfit = 0, minBuy = stock[0];
         for (int i = 0; i < len; i++) {
-            if (minBuy < a[i]) {
+            if (minBuy < stock[i]) {
                 continue;
             }
             int maxSell = 0, iterMaxProfit = 0;
             for (int j = i + 1; j < len; j++) {
-                if (a[i] < a[j] && maxSell < a[j]) {
-                    iterMaxProfit = a[j] - a[i];
-                    maxSell = a[j];
+                if (stock[i] < stock[j] && maxSell < stock[j]) {
+                    iterMaxProfit = stock[j] - stock[i];
+                    maxSell = stock[j];
                 }
             }
             if (maxProfit < iterMaxProfit) {
@@ -41,6 +42,27 @@ public class StockInvest {
             }
         }
         return maxProfit;
+    }
+
+    /**
+     * 时间复杂度O(N)
+     */
+    public static int maxProfitOneDayPerfect(int[] stock) {
+        if (null == stock || stock.length <= 1) {
+            return 0;
+        }
+        int min = stock[0];
+        int maxDiff = stock[1] - min;
+        for (int i = 2; i < stock.length; i++) {
+            int pre = stock[i-1];
+            if (pre < min) {
+                min = pre;
+            }
+            if (stock[i] - min > maxDiff) {
+                maxDiff = stock[i] - min;
+            }
+        }
+        return maxDiff;
     }
 
 }
