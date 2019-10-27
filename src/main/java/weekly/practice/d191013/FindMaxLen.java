@@ -1,7 +1,6 @@
 package weekly.practice.d191013;
 
 import lombok.Data;
-import weekly.practice.D190915.MergeLinkedListIterate;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
