@@ -23,7 +23,6 @@ public class TopK {
 
     /**
      * 1、有重复元素时不能用TreeSet，所以要用PriorityQueue
-     * TODO
      * 2、自己用数组实现小顶堆
      */
     public static PriorityQueue<Integer> heapMethod(int[] nums, int k) {
@@ -35,6 +34,7 @@ public class TopK {
          * (o1, o2) -> o2 - o1
          */
         PriorityQueue<Integer> queue = new PriorityQueue<>(k);
+//        PriorityQueue<Integer> queue = new PriorityQueue<>(k, (o1, o2) -> o2 - o1);
         for (int i = 0; i < k; i++) {
             queue.offer(nums[i]);
         }

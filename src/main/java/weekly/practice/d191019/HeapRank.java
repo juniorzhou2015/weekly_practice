@@ -15,11 +15,14 @@ public class HeapRank {
             return;
         }
         int len = a.length;
-        // 构造大顶堆
+        // 构造大顶堆，堆有序
+        /**
+         * 为什么是从 len/2 开始构造子堆？
+         */
         for (int k = len / 2; k >= 1; k--) {
             sink(a, k, len);
         }
-        // 下沉排序
+        // 下沉排序，数组有序
         while (len > 1) {
             exch(a, 1, len--);
             sink(a, 1, len);

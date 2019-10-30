@@ -36,6 +36,7 @@ public class FindLeastKthNode {
 
     /**
      * 存在死循环，不能用前序遍历类似的写法
+     * 《经典问题解析》中前序和中序写法类似，但不太能够理解
      */
     public static Node findLeastKthNodeInIterate(Node root, int n) {
         if (null == root || n <= 0) {
@@ -83,7 +84,6 @@ public class FindLeastKthNode {
     }
 
     private static int n = 3;
-
     /**
      * Java的值传递
      * 递归传入Integer类型，子函数修改改变不了父函数

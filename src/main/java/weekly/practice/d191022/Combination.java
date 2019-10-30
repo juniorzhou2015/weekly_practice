@@ -15,9 +15,10 @@ public class Combination {
 
     public static void main(String[] args) {
         int[] arr = {1, 2, 5, 7, 10};
-        System.out.println(combination(arr, 50));
-//        System.out.println(combinationRecursion(arr, 50));
-        System.out.println(combinationRecursion2(arr, 50));
+        System.out.println(combination(arr, 15));
+//        System.out.println(combinationRecursion1(arr, 50));
+        System.out.println(combinationRecursion2(arr, 15));
+        System.out.println(coins1(arr, 15));
     }
 
     /**
@@ -41,6 +42,12 @@ public class Combination {
         return count;
     }
 
+    static int total1 = 0;
+    static int countQ1 = 0;
+
+    /**
+     * 如何使用递归求解？
+     */
     public static int combinationRecursion1(int[] arr, int n) {
         if (n <= 0) {
             return 0;
@@ -54,41 +61,41 @@ public class Combination {
         if (5 == n) {
             return 4;
         }
+        if (7 == n) {
+            return 7;
+        }
         if (10 == n) {
             return 11;
         }
         return combinationRecursion1(arr, n - 1)
                 + combinationRecursion1(arr, n - 2)
                 + combinationRecursion1(arr, n - 5)
+                + combinationRecursion1(arr, n - 7)
                 + combinationRecursion1(arr, n - 10);
+    }
+
+    /**
+     * 回溯：尝试所有可能性，递归的一种
+     * 时间复杂度是多少？
+     * 《面试指南》中"换钱的方法数"有详细解答
+     */
+    public static int combinationRecursion2(int[] arr, int n) {
+        Stack<Integer> solution = new Stack<>();
+        return process(arr, 0, solution, n);
     }
 
     static int total = 0;
     static int countQ = 0;
 
-    public static int combinationRecursion2(int[] arr, int n) {
-        Stack<Integer> solution = new Stack<>();
-        Integer target = n;
-        dfs(arr, 0, solution, n);
-        return countQ;
-    }
-
     private static void dfs(int[] arr, int index, Stack<Integer> solution, Integer target) {
         if (total == target) {
             countQ++;
-		/*cout<<countQ<<":";
-		for(int i=0; i<(int)solution.size(); i++)
-		{
-			cout<<solution[i]<<" ";
-		}
-		cout<<endl;*/
+            System.out.println(solution);
             return;
         }
-
         if (total > target) {
             return;
         }
-
         for (int i = index; i < arr.length; i++) {
             total += arr[i];
             solution.add(arr[i]);
@@ -96,6 +103,46 @@ public class Combination {
             solution.pop();
             total -= arr[i];
         }
+    }
+
+    /**
+     * 时间复杂度和arr中钱的面值有关，最差情况下为O(aim^m)，m为arr长度
+     * @param arr
+     * @param index
+     * @param solution
+     * @param target
+     * @return
+     */
+    private static int process(int[] arr, int index, Stack<Integer> solution, int target) {
+        if (0 == target) {
+            System.out.println(solution);
+            return 1;
+        }
+        if (0 > target) {
+            return 0;
+        }
+        int res = 0;
+        for (int i = index; i < arr.length; i++) {
+            solution.add(arr[i]);
+            res += process(arr, i, solution, target - arr[i]);
+            solution.pop();
+        }
+        return res;
+    }
+
+    public static int coins1(int[] arr, int n) {
+        return process1(arr, 0, n);
+    }
+
+    private static int process1(int[] arr, int index, int aim) {
+        if (arr.length == index) {
+            return 0 == aim ? 1 : 0;
+        }
+        int res = 0;
+        for (int i = 0; arr[index] * i <= aim; i++) {
+            res += process1(arr, index + 1, aim - arr[index] * i);
+        }
+        return res;
     }
 
 }
