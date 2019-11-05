@@ -19,6 +19,9 @@ public class Combination {
 //        System.out.println(combinationRecursion1(arr, 50));
         System.out.println(combinationRecursion2(arr, 15));
         System.out.println(coins1(arr, 15));
+        System.out.println(coins2(arr, 15));
+        System.out.println(coins3(arr, 15));
+        System.out.println(coins4(arr, 15));
     }
 
     /**
@@ -107,11 +110,6 @@ public class Combination {
 
     /**
      * 时间复杂度和arr中钱的面值有关，最差情况下为O(aim^m)，m为arr长度
-     * @param arr
-     * @param index
-     * @param solution
-     * @param target
-     * @return
      */
     private static int process(int[] arr, int index, Stack<Integer> solution, int target) {
         if (0 == target) {
@@ -130,8 +128,8 @@ public class Combination {
         return res;
     }
 
-    public static int coins1(int[] arr, int n) {
-        return process1(arr, 0, n);
+    public static int coins1(int[] arr, int aim) {
+        return process1(arr, 0, aim);
     }
 
     private static int process1(int[] arr, int index, int aim) {
@@ -144,5 +142,83 @@ public class Combination {
         }
         return res;
     }
+
+    /**
+     * O(N*aim^2)
+     */
+    public static int coins2(int[] arr, int aim) {
+        int[][] map = new int[arr.length + 1][aim + 1];
+        return process2(arr, 0, aim, map);
+    }
+
+    private static int process2(int[] arr, int index, int aim, int[][] map) {
+        int res = 0;
+        if (arr.length == index) {
+            res = 0 == aim ? 1 : 0;
+            map[index][aim] = 0 == res ? -1 : res;
+            return res;
+        }
+        for (int i = 0; arr[index] * i <= aim; i++) {
+            int indexNext = index + 1;
+            int aimNext = aim - arr[index] * i;
+            int resNext = map[indexNext][aimNext];
+            res += 0 < resNext ? resNext :
+                    -1 == resNext ? 0 : process2(arr, indexNext, aimNext, map);
+        }
+        map[index][aim] = 0 == res ? -1 : res;
+        return res;
+    }
+
+    /**
+     * O(N*aim^2)
+     */
+    public static int coins3(int[] arr, int aim) {
+        int[][] dp = new int[arr.length][aim + 1];
+        for (int i = 0; i < arr.length; i++) {
+            dp[i][0] = 1;
+        }
+        for (int j = 0; arr[0] * j <= aim; j++) {
+            dp[0][arr[0] * j] = 1;
+        }
+        int num = 0;
+        for (int i = 1; i < arr.length; i++) {
+            for (int j = 1; j <= aim; j++) {
+                num = 0;
+                for (int k = 0; k * arr[i] <= j; k++) {
+                    num += dp[i - 1][j - k * arr[i]];
+                }
+                dp[i][j] = num;
+            }
+        }
+        return dp[arr.length - 1][aim];
+    }
+
+    /**
+     * O(N*aim)
+     */
+    public static int coins4(int[] arr, int aim) {
+        int[][] dp = new int[arr.length][aim + 1];
+        for (int i = 0; i < arr.length; i++) {
+            dp[i][0] = 1;
+        }
+        for (int j = 0; arr[0] * j <= aim; j++) {
+            dp[0][arr[0] * j] = 1;
+        }
+        for (int i = 1; i < arr.length; i++) {
+            for (int j = 1; j <= aim; j++) {
+                /**
+                 * 为什么上面两行运行没问题，下面那行运行就有问题？
+                 */
+//                dp[i][j] = dp[i - 1][j];
+//                dp[i][j] += j - arr[i] >= 0 ? dp[i][j - arr[i]] : 0;
+                dp[i][j] = dp[i - 1][j] + j - arr[i] >= 0 ? dp[i][j - arr[i]] : 0;
+            }
+        }
+        return dp[arr.length - 1][aim];
+    }
+    /**
+     * O(N*aim)
+     * 空间压缩O(aim)
+     */
 
 }
