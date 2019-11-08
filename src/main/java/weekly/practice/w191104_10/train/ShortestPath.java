@@ -5,16 +5,16 @@ import java.util.Stack;
 public class ShortestPath {
 
     private DirectedEdge[] edgeTo;
-    private double[] distTo;
+    private int[] distTo;
     private EdgeWeightedDigraph graph;
 
     public ShortestPath(EdgeWeightedDigraph G, String s) {
         edgeTo = new DirectedEdge[G.V()];
-        distTo = new double[G.V()];
+        distTo = new int[G.V()];
         graph = G;
         for (int v = 0; v < G.V(); v++) {
-            distTo[v] = Double.POSITIVE_INFINITY;
-            distTo[getIndex(s)] = 0.0;
+            distTo[v] = Integer.MAX_VALUE;
+            distTo[getIndex(s)] = 0;
         }
     }
 
@@ -22,12 +22,12 @@ public class ShortestPath {
         return graph.vertexes().indexOf(s);
     }
 
-    public double distTo(String v) {
+    public int distTo(String v) {
         return distTo[getIndex(v)];
     }
 
     public boolean hasPathTo(String v) {
-        return distTo(v) < Double.POSITIVE_INFINITY;
+        return distTo(v) < Integer.MAX_VALUE;
     }
 
     public Iterable<DirectedEdge> pathTo(String v) {

@@ -1,6 +1,8 @@
 package weekly.practice.w191104_10.train;
 
 import java.util.*;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.stream.Collectors;
 
 public class EdgeWeightedDigraph {
@@ -40,7 +42,7 @@ public class EdgeWeightedDigraph {
         for (String edge : edges) {
             System.out.println(edge + " " + edge.charAt(0) + " " + edge.charAt(1) + " " + edge.charAt(2));
             DirectedEdge e = new DirectedEdge(String.valueOf(edge.charAt(0)),
-                    String.valueOf(edge.charAt(1)), Double.parseDouble(String.valueOf(edge.charAt(2))));
+                    String.valueOf(edge.charAt(1)), Integer.parseInt(String.valueOf(edge.charAt(2))));
             addEdge(e);
         }
     }
@@ -63,6 +65,38 @@ public class EdgeWeightedDigraph {
             edges.addAll(adj[v]);
         }
         return edges;
+    }
+
+    public int getDistance(String... vertexArray) {
+        int dis = 0;
+        for (int i = 0; i + 1 < vertexArray.length; i++) {
+            List<DirectedEdge> edgeList = adj[vertexes.indexOf(vertexArray[i])];
+            String to = vertexArray[i + 1];
+            Optional<DirectedEdge> edgeOptional =
+                    edgeList.stream().filter(e -> e.to().equals(to)).findFirst();
+            if (!edgeOptional.isPresent()) {
+                return -1;
+            }
+            dis += edgeOptional.get().weight();
+        }
+        return dis;
+    }
+
+    public int getNumWithMaxStops(String from, String to, int max) {
+        int num = 0, level = 0, stops = 0;
+        Queue<String> queue = new LinkedBlockingQueue<>();
+        queue.offer(from);
+        while (!queue.isEmpty() && ++stops <= max) {
+            String v = queue.poll();
+            for (DirectedEdge e : adj(v)) {
+                String t = e.to();
+                queue.offer(t);
+                if (t.equals(to)) {
+                    num++;
+                }
+            }
+        }
+        return num;
     }
 
     public int V() {

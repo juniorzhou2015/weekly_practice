@@ -4,9 +4,9 @@ public class DirectedEdge {
 
     private final String v;
     private final String w;
-    private final double weight;
+    private final int weight;
 
-    public DirectedEdge(String v, String w, double weight) {
+    public DirectedEdge(String v, String w, int weight) {
         System.out.println(v + " " + w + " " + weight);
         this.v = v;
         this.w = w;
@@ -27,6 +27,6 @@ public class DirectedEdge {
 
     @Override
     public String toString() {
-        return String.format("%s->%s %.2f", v, w, weight);
+        return String.format("%s->%s %d", v, w, weight);
     }
 }
