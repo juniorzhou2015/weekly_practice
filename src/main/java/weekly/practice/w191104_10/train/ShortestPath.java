@@ -1,21 +1,26 @@
 package weekly.practice.w191104_10.train;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 public class ShortestPath {
-
-    private DirectedEdge[] edgeTo;
-    private int[] distTo;
+    /**
+     * 最短路径怎么计算出来的？
+     * 有多条最短路径时，edgeTo怎么保存？
+     */
+    protected Map<String, DirectedEdge> edgeTo;
+    protected Map<String, Integer> distTo;
     private EdgeWeightedDigraph graph;
 
     public ShortestPath(EdgeWeightedDigraph G, String s) {
-        edgeTo = new DirectedEdge[G.V()];
-        distTo = new int[G.V()];
-        graph = G;
-        for (int v = 0; v < G.V(); v++) {
-            distTo[v] = Integer.MAX_VALUE;
-            distTo[getIndex(s)] = 0;
+        this.edgeTo = new HashMap<>(G.V());
+        this.distTo = new HashMap<>(G.V());
+        this.graph = G;
+        for (String v : G.vertexes()) {
+            distTo.put(v, Integer.MAX_VALUE);
         }
+        distTo.put(s, 0);
     }
 
     private int getIndex(String s) {
@@ -23,7 +28,7 @@ public class ShortestPath {
     }
 
     public int distTo(String v) {
-        return distTo[getIndex(v)];
+        return distTo.get(v);
     }
 
     public boolean hasPathTo(String v) {
@@ -35,7 +40,7 @@ public class ShortestPath {
             return null;
         }
         Stack<DirectedEdge> path = new Stack<>();
-        for (DirectedEdge e = edgeTo[getIndex(v)]; e != null; e = edgeTo[getIndex(e.from())]) {
+        for (DirectedEdge e = edgeTo.get(v); e != null; e = edgeTo.get(e.from())) {
             path.push(e);
         }
         return path;

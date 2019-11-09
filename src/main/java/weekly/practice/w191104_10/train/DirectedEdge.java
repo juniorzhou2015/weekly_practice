@@ -7,7 +7,6 @@ public class DirectedEdge {
     private final int weight;
 
     public DirectedEdge(String v, String w, int weight) {
-        System.out.println(v + " " + w + " " + weight);
         this.v = v;
         this.w = w;
         this.weight = weight;
@@ -21,7 +20,7 @@ public class DirectedEdge {
         return w;
     }
 
-    public double weight() {
+    public int weight() {
         return weight;
     }
 
