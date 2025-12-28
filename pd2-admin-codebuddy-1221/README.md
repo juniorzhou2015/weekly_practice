@@ -4,6 +4,17 @@
 
 ## 运行方式
 
+### Docker Compose（推荐：一键启动 App + MySQL）
+
+> **注意**：默认密码仅用于快速启动，外网部署请务必修改（见下方“外网可访问部署”）。
+
+```bash
+cd /workspace/pd2-admin-codebuddy-1221
+docker compose up -d --build
+```
+
+访问：`http://<服务器公网IP>:8000/`
+
 ### 本地运行（需要可用的 MySQL）
 
 1. 安装依赖
@@ -38,6 +49,17 @@ uvicorn main:app --reload --port 8000
 docker build -t pd2-portal .
 docker run --rm -p 8000:8000 -e PD2_MYSQL_DSN='mysql+asyncmy://pd2:pd2@<mysql-host>:3306/pd2_portal?charset=utf8mb4' pd2-portal
 ```
+
+## 外网可访问部署（稳定&可维护）
+
+- **最小方式（直接暴露端口）**
+  - 服务器放行安全组/防火墙端口：`8000/tcp`
+  - 启动：`docker compose up -d --build`
+  - 访问：`http://<公网IP>:8000/`
+- **推荐方式（域名 + Nginx 反代 + HTTPS）**
+  - Nginx 监听 `443`，反代到 `127.0.0.1:8000`
+  - 用 Let’s Encrypt 配置证书（生产更安全）
+  - 只对外开放 `80/443`，不直接暴露 `8000`
 
 ## 目录结构
 
