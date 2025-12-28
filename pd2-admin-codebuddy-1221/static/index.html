@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PD2 Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body class="bg-slate-50 text-slate-900">
+    <div class="min-h-screen flex flex-col">
+      <!-- Top Bar -->
+      <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-slate-200">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="h-16 flex items-center justify-between relative">
+            <div class="flex items-center gap-3">
+              <div class="h-9 w-9 rounded-xl bg-blue-600 text-white flex items-center justify-center font-semibold">PD</div>
+              <div class="leading-tight">
+                <div class="font-semibold">管理后台门户</div>
+                <div class="text-xs text-slate-500">ToC 风格 · 轻质感 · 可维护</div>
+              </div>
+            </div>
+
+            <!-- Primary Nav (center) -->
+            <nav class="hidden md:flex items-center gap-2 absolute left-1/2 -translate-x-1/2" id="primaryNav"></nav>
+
+            <!-- Utilities (right) -->
+            <div class="flex items-center gap-2">
+              <a
+                class="btn btn-secondary hidden sm:inline-flex"
+                href="/minutes"
+                data-link
+                title="会议纪要"
+              >
+                会议纪要
+              </a>
+              <button class="btn btn-secondary" id="btnHealth" title="健康检查">健康</button>
+            </div>
+          </div>
+
+          <!-- Secondary Nav -->
+          <div class="pb-3">
+            <div class="flex items-center justify-between gap-3">
+              <nav class="flex flex-wrap gap-2" id="secondaryNav"></nav>
+              <div class="text-xs text-slate-500" id="routeHint"></div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main -->
+      <main class="flex-1">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
+          <div id="page" class="page-transition"></div>
+        </div>
+      </main>
+
+      <footer class="py-6 text-center text-xs text-slate-400">
+        PD2 Portal · FastAPI + 原生前端 · Tailwind
+      </footer>
+    </div>
+
+    <!-- Modal root -->
+    <div id="modalRoot"></div>
+    <div id="toastRoot" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 space-y-2"></div>
+
+    <script type="module" src="/static/main.js"></script>
+  </body>
+</html>
+
